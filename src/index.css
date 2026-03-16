@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "font1";
+  src: url("/fonts/Lausanne-300.woff2") format("woff2");
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: "font2";
+  src: url("/fonts/Lausanne-500.woff2") format("woff2");
+  font-weight: 500;
+}
+
+.moveX{
+  animation-name: moveAnimation;
+  animation-duration: 15s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+.moveLink{
+  opacity: 0;
+}
+
+.link:hover .moveLink{
+  opacity: 1;
+}
+
+@keyframes moveAnimation{
+  from{
+    transform: translateX(0);
+  }
+  to{
+    transform: translateX(-100%);
+  }
+}
+
+body {
+  font-family: "Lausanne", -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto, arial, sans-serif;
+}
