@@ -33,7 +33,7 @@ const Agence = () => {
       scrollTrigger: {
         trigger: "#page1",
         start: "top 30%",
-        end: "top -80%",
+        end: "top -90%",
         pin: imageDivRef.current,
         scrub: 1,
 
@@ -58,8 +58,7 @@ const Agence = () => {
 
     <div className="min-h-screen">
 
-      <div id="page1" className="relative py-10">
-
+<div id="page1" className="relative py-10 min-h-[300vh]">
         <div
           ref={imageDivRef}
           className="
