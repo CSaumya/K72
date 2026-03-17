@@ -6,7 +6,6 @@ import { useRef } from "react";
 gsap.registerPlugin(ScrollTrigger);
 
 const Agence = () => {
-
   const imageDivRef = useRef(null);
   const imageRef = useRef(null);
 
@@ -28,37 +27,34 @@ const Agence = () => {
   ];
 
   useGSAP(() => {
+    let currentIndex = 0;
 
-    gsap.to(imageDivRef.current, {
-      scrollTrigger: {
-        trigger: "#page1",
-        start: "top 30%",
-        end: "top -90%",
-        pin: imageDivRef.current,
-        scrub: 1,
+    ScrollTrigger.create({
+      trigger: "#page1",
+      start: "top top",
+      end: "bottom top",
+      scrub: 1,
+      pin: imageDivRef.current,
+      anticipatePin: 1,
 
-        onUpdate: (elem) => {
+      onUpdate: (self) => {
+        let index = Math.floor(self.progress * imageArray.length);
+        index = Math.min(index, imageArray.length - 1);
 
-          let imageIndex;
-
-          if (elem.progress < 1) {
-            imageIndex = Math.floor(elem.progress * imageArray.length);
-          } else {
-            imageIndex = imageArray.length - 1;
-          }
-
-          imageRef.current.src = imageArray[imageIndex];
+        // update only when index changes (performance boost)
+        if (index !== currentIndex) {
+          currentIndex = index;
+          imageRef.current.src = imageArray[index];
         }
-      }
+      },
     });
-
   }, []);
 
   return (
-
     <div className="min-h-screen">
-
-<div id="page1" className="relative py-10 min-h-[300vh]">
+      <div id="page1" className="relative py-10 min-h-[300vh]">
+        
+        {/* IMAGE */}
         <div
           ref={imageDivRef}
           className="
@@ -79,44 +75,43 @@ const Agence = () => {
           <img
             ref={imageRef}
             className="w-full h-full object-cover"
-            src="https://k72.ca/uploads/teamMembers/Carl_480x640-480x640.jpg"
+            src={imageArray[0]}
             alt=""
           />
         </div>
 
+        {/* HEADING */}
         <div className="relative font-[font2] text-center mt-[30vh] lg:mt-[55vh]">
-
           <h1 className="
-          text-[16vw]
-          sm:text-[14vw]
-          md:text-[12vw]
-          lg:text-[20vw]
-          uppercase
-          leading-[15vw]
-          lg:leading-[18vw]
+            text-[16vw]
+            sm:text-[14vw]
+            md:text-[12vw]
+            lg:text-[20vw]
+            uppercase
+            leading-[15vw]
+            lg:leading-[18vw]
           ">
             Soixan7e <br />
             Douze
           </h1>
-
         </div>
 
+        {/* TEXT */}
         <div className="
-        mt-8
-        px-6
-        md:px-12
-        lg:px-0
-        lg:pl-[40%]
-        lg:mt-20
-        relative
+          mt-8
+          px-6
+          md:px-12
+          lg:px-0
+          lg:pl-[40%]
+          lg:mt-20
+          relative
         ">
-
           <p className="
-          text-base
-          sm:text-lg
-          md:text-xl
-          lg:text-4xl
-          leading-snug
+            text-base
+            sm:text-lg
+            md:text-xl
+            lg:text-4xl
+            leading-snug
           ">
             Notre curiosité nourrit notre créativité. On reste humbles et on
             dit non aux gros egos, même le vôtre. Une marque est vivante.
@@ -125,13 +120,10 @@ const Agence = () => {
             terme. C’est pour ça qu’on s’engage à donner de la perspective,
             pour bâtir des marques influentes.
           </p>
-
         </div>
 
       </div>
-
     </div>
-
   );
 };
 
